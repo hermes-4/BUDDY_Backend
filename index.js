@@ -4,7 +4,8 @@ const routes = require('./routes/routes');
 
 
 // mongoose connection
-mongoose.connect('mongodb+srv://ebenezeroforia08:mongodbatlas@cluster0.kid8vhm.mongodb.net/') 
+mongoose.connect('mongodb://localhost:27017/')
+// mongodb+srv://ebenezeroforia08:mongodbatlas@cluster0.kid8vhm.mongodb.net/ 
 const database = mongoose.connection;
 
 database.on('error', (error) => {

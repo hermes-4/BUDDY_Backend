@@ -23,7 +23,7 @@ const studentSchema = mongoose.Schema({
         required: true
     },
     courses:{
-        type: Array,
+        type: Object,
     }
 })
 
