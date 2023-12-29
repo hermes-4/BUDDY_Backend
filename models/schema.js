@@ -1,3 +1,4 @@
+const express = require('express');
 const mongoose = require('mongoose');
 
 const studentSchema = mongoose.Schema({
@@ -21,13 +22,30 @@ const studentSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
-    courses:{
-        type: Object,
     }
+    
 })
 
 
 const Student = mongoose.model('Student', studentSchema);
 
 module.exports = Student;
+
+
+
+const courseSchema = mongoose.Schema({
+    courses: {
+        type: Object,
+        required: true
+    }
+      ,
+    studentID: {
+        type: String,
+        required: true
+    }
+});
+
+const Course = mongoose.model('Course', courseSchema);
+
+
+module.exports = Course;

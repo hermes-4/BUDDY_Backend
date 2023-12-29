@@ -1,88 +1,86 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const StudentSchema = require('../models/schema');
+const Course = require('../models/schema');
 const app = express();
 
+app.use(express.json());
 
-app.use(express.json())
-
-
-// Routes
-// First route for registering a new student
+// Register a new student
 app.post('/register', async (req, res) => {
+  try {
+    // Check if a student with the provided details already exists
+    const existingStudent = await Student.find({
+      Firstname: req.body.firstName,
+      Lastname: req.body.lastName,
+      Othernames: req.body.otherNames,
+      StudentID: req.body.studentID
+    });
 
-        const student = await StudentSchema.find({
-            Firstname:req.body.firstName, 
-            Lastname:req.body.lastName, 
-            Othernames:req.body.otherNames, 
-            StudentID:req.body.studentID, 
-            Password:req.body.password, 
-            Courses:req.body.courses
-        });
-        
-        
+    if (existingStudent) {
+      return res.status(400).json({ success: false, message: 'Student already exists' });
+    }
 
-    if(student.length==0) {
-        const success = await StudentSchema.create(req.body);
-        res.status(200).json(success);
+    // Create a new student
+    const newStudent = new StudentSchema(req.body);
+    const savedStudent = await newStudent.save();
+    res.status(201).json({ success: true, message: 'Student registered successfully', student: savedStudent });
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      // Handle validation errors
+      return res.status(400).json({ success: false, errors: error.errors });
+    } else {
+      // Handle other errors
+      return res.status(500).json({ success: false, message: 'Internal server error' });
     }
-    else {
-        res.status(400).json({ message: error.message });
-    }
+  }
 });
 
 
-//Second route. For logining into the system
-app.post('/login', async (req, res) => {
-        const { studentID, password } = req.body;
 
-        // Validate if studentID and password has been entered
+// Login route
+app.post('/login', async (req, res) => { 
+  const newStudentID = req.body.studentID;
+  const newPassword = req.body.password;
 
-        // Inside the try and check block, validate with the database.
-        
-        // If user not found or password doesn't match, return an error        
-        // in the catch block, return an error 
-        if (!studentID && !password) {
-            return res.status(401).json({ message:error.message });
-        }
+  if (!newStudentID || !newPassword) {
+    return res.status(400).json({ success: false, message: 'StudentID and password are required' });
+  }
 
-
-    try {
-        const student = await StudentSchema.findOne({ studentID, password });
-        if (!student || !student.password == !password) {
-            return res.status(401).json({ message: 'Sign In unsuccesful' });
-        }
-
-
-        return res.status(200).json({ message:'SignIn Successful' });
-    }
-    catch(error) {
-        res.status(400).json({ message: error.message });
-
-    }
-})
-
-
-
-//Specifying courses for the semester
-app.post('/courses', async (req, res) => {
-    const { courses } = req.body;
-
-   // // You can access the authenticated student's username using req.user.username
-    // Destructuring studentID and saved into student    
-    const student = await StudentSchema.findOne({ username: req.body.studentID });
+  try {
+    // Find the student by studentID and password
+    const student = await StudentSchema.find({ 
+      studentID: newStudentID,
+      password: newPassword
+    });
 
 
     if (!student) {
-        return res.status(404).json({ error: 'Student not found' });
+      return res.status(401).json({ success: false, message: 'Sign In unsuccessful' });
     }
 
-    student.courses = courses;
-    await student.save();
-    
-    res.status(200).json({ message:'Courses sucessfully added for the semseter'});
-
+    return res.status(200).json({ success: true, message: 'Sign In Successful' });
+  } catch (error) {
+    console.error('Login error:', error);
+    return res.status(500).json({ success: false, message: 'Internal server error' });
+  }
 });
+
+  
+
+  // Specify courses for the semester
+
+app.post('/courses', async (req, res) => {
+  try {
+  const course = new Course(req.body);
+  const savedCourse = await course.save();
+  res.status(201).json({ success: true, message: 'Student registered successfully', student: savedCourse });
+} catch (error) {
+    // Handle validation errors
+    return res.status(400).json({ success: false, errors: error.errors });
+ 
+}
+})
+
 
 
 module.exports = app;
