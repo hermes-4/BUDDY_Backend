@@ -5,16 +5,16 @@ const admin = require('./admin/adminRoutes')
 const sudo = require('./admin/sudoRoutes')
 const update = require('./routes/updateRoutes');
 // mongoose connection
-mongoose.connect('mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2')
+mongoose.connect('mongodb+srv://tattahabelk:Abel1919@cluster0.bkxk0nq.mongodb.net/')
+.then(()=>{
+    console.log("Connected to MongoDB");
+})
+.catch((error)=>{
+    console.log(error.message);
+})
 // mongodb+srv://ebenezeroforia08:mongodbatlas@cluster0.kid8vhm.mongodb.net/ 
-const database = mongoose.connection;
 
-database.on('error', (error) => {
-    console.log(error)
-})
-database.once('connecred', () => {
-    console.log('DATABASE CONNECTED');
-})
+
 
 
 
