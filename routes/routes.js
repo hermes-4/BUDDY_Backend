@@ -7,32 +7,22 @@ app.use(express.json());
 
 // Register a new student
 app.post('/register', async (req, res) => {
-  try {
+  
     // Check if a student with the provided details already exists
-    const existingStudent = await Student.find({
-      Firstname: req.body.firstName,
-      Lastname: req.body.lastName,
-      Othernames: req.body.otherNames,
-      StudentID: req.body.studentID
+    const existingStudent = await StudentSchema.find({
+      studentID: req.body.studentID
     });
 
-    if (existingStudent) {
+    if (existingStudent.length != 0) {
       return res.status(400).json({ success: false, message: 'Student already exists' });
     }
-
+    else {
     // Create a new student
-    const newStudent = new StudentSchema(req.body);
-    const savedStudent = await newStudent.save();
-    res.status(201).json({ success: true, message: 'Student registered successfully', student: savedStudent });
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      // Handle validation errors
-      return res.status(400).json({ success: false, errors: error.errors });
-    } else {
-      // Handle other errors
-      return res.status(500).json({ success: false, message: 'Internal server error' });
-    }
+    const newStudent =  StudentSchema.create(req.body);
+    res.status(200).json(newStudent);
+
   }
+
 });
 
 

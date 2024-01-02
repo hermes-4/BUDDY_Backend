@@ -1,10 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes/routes');
+const admin = require('./admin/adminRoutes')
 
 
 // mongoose connection
-mongoose.connect('mongodb://localhost:27017/')
+mongoose.connect('mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2')
 // mongodb+srv://ebenezeroforia08:mongodbatlas@cluster0.kid8vhm.mongodb.net/ 
 const database = mongoose.connection;
 
@@ -20,7 +21,7 @@ database.once('connecred', () => {
 const app = express();
 app.use(express.json());
 app.use('/api', routes);
-
+app.use('/admin',admin);
 
 const PORT = process.env.PORT || 3020;
 
