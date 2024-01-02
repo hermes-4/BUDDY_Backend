@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const route1 = express.Router();
-const Student = require('../models/schema')
+const Student = require('../models/studentSchema')
 
 //This admin route is for testing purposes
 

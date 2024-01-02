@@ -31,21 +31,3 @@ const Student = mongoose.model('Student', studentSchema);
 
 module.exports = Student;
 
-
-
-const courseSchema = mongoose.Schema({
-    courses: {
-        type: Object,
-        required: true
-    }
-      ,
-    studentID: {
-        type: String,
-        required: true
-    }
-});
-
-const Course = mongoose.model('Course', courseSchema);
-
-
-module.exports = Course;

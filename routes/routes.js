@@ -1,12 +1,17 @@
 const express = require('express');
-const StudentSchema = require('../models/schema');
-const Course = require('../models/schema');
-const app = express();
+const StudentSchema = require('../models/studentSchema');
+const Course = require('../models/studentSchema');
+const route0 = express();
 
-app.use(express.json());
+
+
+
+route0.use((req,res,next)=>{
+  next();
+});
 
 // Register a new student
-app.post('/register', async (req, res) => {
+route0.post('/register', async (req, res) => {
   
     // Check if a student with the provided details already exists
     const existingStudent = await StudentSchema.find({
@@ -18,7 +23,7 @@ app.post('/register', async (req, res) => {
     }
     else {
     // Create a new student
-    const newStudent =  StudentSchema.create(req.body);
+    const newStudent = await StudentSchema.create(req.body);
     res.status(200).json(newStudent);
 
   }
@@ -28,7 +33,7 @@ app.post('/register', async (req, res) => {
 
 
 // Login route
-app.post('/login', async (req, res) => { 
+route0.post('/login', async (req, res) => { 
   const newStudentID = req.body.studentID;
   const newPassword = req.body.password;
 
@@ -59,7 +64,7 @@ app.post('/login', async (req, res) => {
 
   // Specify courses for the semester
 
-app.post('/courses', async (req, res) => {
+route0.post('/courses', async (req, res) => {
   try {
   const course = new Course(req.body);
   const savedCourse = await course.save();
@@ -73,4 +78,4 @@ app.post('/courses', async (req, res) => {
 
 
 
-module.exports = app;
+module.exports = route0;
