@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 
 const courseSchema = mongoose.Schema({
     courses: {
-        type: Object,
+        type: Array,
         required: true
     }
       ,
     studentID: {
-        type: String,
+        type: Number,
         required: true
     }
 });

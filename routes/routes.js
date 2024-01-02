@@ -1,6 +1,6 @@
 const express = require('express');
 const StudentSchema = require('../models/studentSchema');
-const Course = require('../models/studentSchema');
+const Course = require('../models/courseSchema');
 const route0 = express();
 
 
@@ -66,13 +66,11 @@ route0.post('/login', async (req, res) => {
 
 route0.post('/courses', async (req, res) => {
   try {
-  const course = new Course(req.body);
-  const savedCourse = await course.save();
-  res.status(201).json({ success: true, message: 'Student registered successfully', student: savedCourse });
+  const course = await Course.create(req.body);
+  res.status(201).json({ success: true, message: 'Student registered successfully', student: course });
 } catch (error) {
-    // Handle validation errors
-    return res.status(400).json({ success: false, errors: error.errors });
- 
+   
+    console.log(error.message);
 }
 })
 
