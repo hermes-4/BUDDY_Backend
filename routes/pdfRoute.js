@@ -6,9 +6,8 @@ pdfRoute.use((req,res,next)=>{
     next();
 });
 
-pdfRoute.get('/pdf', (req, res) => {
-    const filePath = path.join("pdf", '/timetable.pdf');
-    res.sendFile(filePath);
+pdfRoute.get('/pdf1', (req, res) => {
+    res.download("../pdf/timetable.pdf");
 });
 
 
