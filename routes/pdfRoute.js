@@ -1,12 +1,14 @@
 const express =require('express');
-const express = require('express');
 const path = require('path');
-const pdf = require('../pdf/timetable.pdf')
 const pdfRoute = express.Router();
 
+pdfRoute.use((req,res,next)=>{
+    next();
+});
 
-pdfRoute.get('/pdf1', (req, res) => {   
-    res.sendFile(pdf);
+pdfRoute.get('/pdf', (req, res) => {
+    const filePath = path.join("pdf", '/timetable.pdf');
+    res.sendFile(filePath);
 });
 
 

@@ -29,7 +29,7 @@ app.use('/api', routes);
 app.use('/admin',admin);
 app.use('/update',update);
 app.use('/sudo',sudo);
-app.use('/pdf',);
+app.use('/pdf',pdfRoute);
 
 const PORT = process.env.PORT || 3020;
 
