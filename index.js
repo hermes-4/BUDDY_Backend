@@ -4,6 +4,10 @@ const routes = require('./routes/routes');
 const admin = require('./admin/adminRoutes')
 const sudo = require('./admin/sudoRoutes')
 const update = require('./routes/updateRoutes');
+const pdfRoute = require('./routes/pdfRoute');  
+
+
+
 // mongoose connection
 mongoose.connect('mongodb+srv://tattahabelk:Abel1919@cluster0.bkxk0nq.mongodb.net/')
 .then(()=>{
@@ -25,6 +29,7 @@ app.use('/api', routes);
 app.use('/admin',admin);
 app.use('/update',update);
 app.use('/sudo',sudo);
+app.use('/pdf',);
 
 const PORT = process.env.PORT || 3020;
 
