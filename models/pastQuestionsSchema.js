@@ -7,7 +7,7 @@ const pastQuestionsSchema = new mongoose.Schema({
     },
 
     endPoints: {
-        type: [String]
+        type: Array
     }
 })
 
