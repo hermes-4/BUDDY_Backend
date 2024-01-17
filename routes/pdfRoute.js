@@ -9,7 +9,10 @@ const filePath5 = path.join(__dirname, '../pdf', 'fees.pdf');
 const filePath6 = path.join(__dirname, '../pdf', 'examtimetable.pdf');
 const filePath7 = path.join(__dirname, '../pastQuestions', 'dcit101.pdf');
 const filePath8 = path.join(__dirname, '../pastQuestions', 'dcit201.pdf');
-const filePath9 = path.join(__dirname, '../pastQuestions', 'math121.pdf');
+const filePath9 = path.join(__dirname, '../pastQuestions', 'dcit201_2.pdf');
+const filePath10 = path.join(__dirname, '../pastQuestions', 'math121.pdf');
+const filePath11 = path.join(__dirname, '../pastQuestions', 'math121_2.pdf');
+
 
 
 
@@ -41,7 +44,11 @@ pdfRoute.get('/examtimetable', (req, res) => {
     res.download(filePath6);
 });
 
-pdfRoute.get('/dcit101', (req, res) => {
+pdfRoute.get('/dcit101_21/22', (req, res) => {
+    res.download(filePath7);
+});
+
+pdfRoute.get('/dcit101_20/21', (req, res) => {
     res.download(filePath7);
 });
 
@@ -49,10 +56,13 @@ pdfRoute.get('/dcit201', (req,res) => {
     res.download(filePath8);
 });
 
-pdfRoute.get('/math121', (req,res) => {
-    res.download(filePath9);
+pdfRoute.get('/math121_21/22', (req,res) => {
+    res.download(filePath10);
 });
 
+pdfRoute.get('/math121_17/18', (req, res) => {
+    res.download(filePath11)
+})
 
 module.exports = pdfRoute;
 

@@ -5,7 +5,7 @@ const admin = require('./admin/adminRoutes')
 const sudo = require('./admin/sudoRoutes')
 const update = require('./routes/updateRoutes');
 const pdfRoute = require('./routes/pdfRoute');  
-
+const pascoRoute = require('./routes/pascoRoutes');
 
 
 // mongoose connection
@@ -30,6 +30,7 @@ app.use('/admin',admin);
 app.use('/update',update);
 app.use('/sudo',sudo);
 app.use('/pdf',pdfRoute);
+app.use('/pasco',pascoRoute);
 
 const PORT = process.env.PORT || 3020;
 
