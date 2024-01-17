@@ -8,8 +8,6 @@ route6.post('/create', async (req, res) => {
     try {
         
         const newPasco = await PastQuestionsSchema.create(req.body);
-        
-        const savedPasco = newPasco.save();
         res.status(200).json(savedPasco);  
 
 
